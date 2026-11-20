@@ -50,7 +50,7 @@ results/
 - Installer l'environnement et télécharger le dataset avec `kagglehub`
 - Explorer le dataset (nombre de classes, tailles, répartition)
 - Créer **un split unique** train / validation / test, stratifié, avec une seed fixe, sauvegardé dans un fichier CSV partagé
-- Fixer une **taille d'image commune** (ex. 224×224)
+- Fixer une **taille d'image commune** (128 × 128 pixels, RGB)
 - Fixer les **métriques communes** : accuracy, F1 macro, matrice de confusion (calculées sur le même jeu de test)
 - Écrire un module de chargement des données partagé, utilisé par tous
 - Choisir un format de résultats commun (un fichier JSON ou CSV par expérience : modèle, hyperparamètres, métriques)
@@ -79,3 +79,20 @@ results/
 - Tout le monde utilise le même split, la même taille d'image et les mêmes métriques
 - Un dépôt Git partagé, une branche par piste
 - Chaque membre doit comprendre et pouvoir expliquer l'ensemble du projet
+## Vérifier le socle commun
+
+Depuis la racine du dépôt, installez les dépendances avec
+`python -m pip install -r requirements.txt`. Préparez les dossiers
+`data/train`, `data/valid` et `data/test` avec la cellule de copie du
+notebook et le fichier partagé `splits.csv`.
+
+Lancez `python main.py` pour vérifier les effectifs, les fichiers et les
+deux méthodes de redimensionnement sur la validation. Le redimensionnement
+direct sert de référence. L'option avec marges conserve les proportions.
+Les deux méthodes utilisent les mêmes chemins et le même ordre de classes.
+Les pixels restent entre 0 et 255 au chargement.
+
+Pour sauvegarder une expérience, utilisez `save_results` dans
+`src/evaluation.py`. La matrice de confusion utilise les classes du
+chargeur dans l'ordre alphabétique, avec les vraies classes en lignes et
+les prédictions en colonnes.

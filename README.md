@@ -1,2 +1,1 @@
-# NN-project---EuroSat-CNN
-A classification model using the euroSat dataset
+A classification model using the COCO 2017: 5 classes

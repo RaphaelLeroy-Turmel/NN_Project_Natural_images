@@ -1,9 +1,9 @@
 # Neural Network CNN : classification d'images
 
-Projet d'équipe classification d'images avec un CNN sur le dataset **Natural Images** (Kaggle, `prasunroy/natural-images`).
+Projet d'équipe (3 étudiants, ESILV) : classification d'images avec un CNN sur le dataset **Natural Images** (Kaggle, `prasunroy/natural-images`).
 
 - 8 classes : airplane, car, cat, dog, flower, fruit, motorbike, person
-- 6 899 images, répartition plutot equilibrée (dog minoritaire avec 10.2% et et furit majoritaire avec 14.5% , moyenne des 10 classe)
+- 6 899 images, répartition légèrement déséquilibrée (de 702 à 1 000 images par classe)
 
 ## Attendus du projet
 
@@ -19,6 +19,29 @@ Projet d'équipe classification d'images avec un CNN sur le dataset **Natural Im
 | Pierre-Louis | **A** : CNN from scratch | Baseline construit à la main, avec et sans data augmentation |
 | Florentin | **B** : Transfer learning (extraction de features) | Backbone pré-entraîné gelé + nouvelle tête de classification |
 | Raphaël | **C** : Fine-tuning | Dégel des dernières couches d'un backbone, éventuellement un second modèle |
+
+## Structure du projet
+
+```text
+main.py
+data/
+    train/
+    valid/
+    test/
+src/
+    model1.py
+    model2.py
+    ...
+results/
+    model1_v1/
+        weights
+        train_loss.csv
+        valid_loss.csv
+        test_output.json    => {"metric1": val, ...}
+        config.yaml (correspond au configuration du modele : nombre de parametre, activation function , etc...)
+    model1_v2/
+        ...
+```
 
 ## Étapes
 
@@ -54,5 +77,5 @@ Projet d'équipe classification d'images avec un CNN sur le dataset **Natural Im
 ## Règles d'équipe
 
 - Tout le monde utilise le même split, la même taille d'image et les mêmes métriques
-- Un dépôt Git partagé, une branche par piste (format du nom de branche : modele A : from scratch)
+- Un dépôt Git partagé, une branche par piste
 - Chaque membre doit comprendre et pouvoir expliquer l'ensemble du projet

@@ -96,3 +96,26 @@ Pour sauvegarder une expérience, utilisez `save_results` dans
 `src/evaluation.py`. La matrice de confusion utilise les classes du
 chargeur dans l'ordre alphabétique, avec les vraies classes en lignes et
 les prédictions en colonnes.
+
+### Variantes et robustesse du modèle B
+
+Depuis la racine du dépôt, avec TensorFlow et Matplotlib disponibles :
+
+```bash
+python -m src.model_b --resize direct
+python -m src.model_b --resize padding
+python -m src.robustness_b --resize direct
+python -m src.robustness_b --resize padding
+```
+
+Chaque entraînement écrit ses poids, sa configuration, ses courbes et ses
+scores dans `results/model_b_direct_v1/` ou `results/model_b_padding_v1/`.
+Relancer une variante remplace ses résultats dans le dossier correspondant.
+
+La robustesse réutilise les poids de la variante choisie et évalue les mêmes
+images de test à plusieurs niveaux de flou, de pixelisation et d'occlusion.
+Le résultat est enregistré dans `results/model_b_<resize>_robustness_v1/`
+avec les courbes, le CSV des scores, le JSON et un fichier de configuration
+qui indique les poids utilisés. Pour la pixelisation, un bloc de 1 px
+correspond au test original, et un bloc de 2 px à la réduction en 64 × 64
+suivie du retour à 128 × 128.

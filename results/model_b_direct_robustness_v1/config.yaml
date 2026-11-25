@@ -1,0 +1,19 @@
+black_square_side_px:
+- 0
+- 24
+- 40
+- 64
+blur_radius_px:
+- 0
+- 1
+- 2
+- 3
+image_size: 128
+pixel_block_width_px:
+- 1
+- 2
+- 4
+- 8
+resize: direct
+split: test
+weights: results/model_b_direct_v1/model.weights.h5

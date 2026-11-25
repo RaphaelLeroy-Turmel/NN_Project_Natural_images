@@ -5,3 +5,8 @@ learning_rate: 0.001
 model: "MobileNetV2 gel\xE9"
 resize: direct
 seed: 42
+backbone_weights: imagenet
+backbone_trainable: false
+classifier_activation: softmax
+total_params: 2268232
+trainable_params: 10248

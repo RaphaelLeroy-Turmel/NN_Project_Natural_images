@@ -1,3 +1,6 @@
+import argparse
+from pathlib import Path
+
 from tensorflow import keras
 from tensorflow.keras import layers
 from src.data_load import IMAGE_SIZE, load_images # récupère la taille normée (128)
@@ -5,10 +8,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import f1_score
 
-def build_model_b():
+def build_model_b(weights="imagenet"):
     backbone = keras.applications.MobileNetV2( # Création du MobileNetV2
         input_shape = (IMAGE_SIZE, IMAGE_SIZE, 3),
-        weights = "imagenet", # Poids appris pendant entrainement sur imagenet
+        weights=weights,
         include_top = False # Retire tete de classification imagenet pour pouvoir ajouter la notre
     )
 
@@ -25,8 +28,13 @@ def build_model_b():
     return model
 
 if __name__ == "__main__":
-    with_padding = False
-    resize_name = "padding" if with_padding else "direct"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--resize", choices=["direct", "padding"], default="direct")
+    args = parser.parse_args()
+    resize_name = args.resize
+    with_padding = resize_name == "padding"
+    run_name = f"model_b_{resize_name}_v1"
+    run_folder = Path("results") / run_name
 
     keras.utils.set_random_seed(42)
 
@@ -57,8 +65,13 @@ if __name__ == "__main__":
 
     config = {
         "model": "MobileNetV2 gelé",
-        "resize": "direct",
-        "image_size": 128,
+        "resize": resize_name,
+        "image_size": IMAGE_SIZE,
+        "backbone_weights": "imagenet",
+        "backbone_trainable": False,
+        "classifier_activation": "softmax",
+        "total_params": model.count_params(),
+        "trainable_params": sum(int(np.prod(weight.shape)) for weight in model.trainable_weights),
         "seed": 42,
         "epochs": 3,
         "batch_size": 32,
@@ -66,7 +79,7 @@ if __name__ == "__main__":
     }
 
     results = save_results(
-        "model_b_direct_v1",
+        run_name,
         model, history, y_test, test_scores, class_names, config
     )
 
@@ -94,8 +107,8 @@ if __name__ == "__main__":
     plt.legend()
 
     plt.tight_layout() # espace les graphiques
-    plt.savefig(f"model_b_{resize_name}_learning_curves.png", dpi=150) # enregistre le png à la racine
-    plt.show()
+    plt.savefig(run_folder / "learning_curves.png", dpi=150)
+    plt.close()
 
     probabilities = model.predict(X_val, batch_size = 32, verbose = 0)
     predictions = np.argmax(probabilities, axis = 1)
@@ -118,4 +131,5 @@ if __name__ == "__main__":
         plt.imshow(X_val[i])
         plt.title(f"Vrai : {true_class} | Prédit : {predicted_class}")
         plt.axis("off")
-        plt.show()
+        plt.savefig(run_folder / f"validation_error_{i}.png", dpi=150)
+        plt.close()

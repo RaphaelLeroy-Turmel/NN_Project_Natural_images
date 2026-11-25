@@ -23,25 +23,37 @@ Projet d'équipe (3 étudiants, ESILV) : classification d'images avec un CNN sur
 ## Structure du projet
 
 ```text
-main.py
+main.py                       # vérification du socle commun (ne pas y mettre de piste)
+run_finetuning.py             # piste C : charge les données et lance les expériences
+requirements.txt
+splits.csv                    # split train / validation / test partagé
+Data_Exploration.ipynb
 data/
     train/
     valid/
     test/
 src/
-    model1.py
-    model2.py
+    data_load.py             # chargement des données partagé (load_images, IMAGE_SIZE)
+    evaluation.py            # métriques communes et save_results
+    degradation.py           # pollution des images d'entraînement (partagé)
+    model_finetuning.py      # piste C : MobileNetV2, tête de classification, gel / dégel
+    experiment.py            # piste C : run_experiment (entraîner, évaluer, sauvegarder)
+    model1.py                # autres pistes : un fichier par modèle
     ...
 results/
-    model1_v1/
-        weights
+    <nom_du_modèle>_v<n>/    # un dossier par expérience, jamais écrasé
+        weights.weights.h5
         train_loss.csv
         valid_loss.csv
-        test_output.json    => {"metric1": val, ...}
+        test_output.json    => {"accuracy": val, "f1_macro": val, "confusion_matrix": [...], ...}
         config.yaml (correspond au configuration du modele : nombre de parametre, activation function , etc...)
-    model1_v2/
-        ...
 ```
+
+Convention de nommage des dossiers de `results/` (piste C) :
+`C_<backbone>_<phase>_lr<lr>_<pollution>_v<n>`, par exemple
+`C_mobilenetv2_unfreeze30layers_lr1e-05_flou20_v1` (30 couches dégelées,
+learning rate 1e-5, 20 % des images d'entraînement floutées). Le taux de
+pollution est aussi enregistré dans `config.yaml`.
 
 ## Étapes
 

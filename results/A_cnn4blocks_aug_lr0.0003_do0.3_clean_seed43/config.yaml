@@ -1,0 +1,42 @@
+run_name: A_cnn4blocks_aug_lr0.0003_do0.3_clean_seed43
+config_key: A_cnn4blocks_aug_lr0.0003_do0.3
+track: A
+model: cnn_from_scratch
+category: aug
+architecture: 4x [Conv2D-BatchNorm-ReLU-MaxPool] + GlobalAveragePooling + Dense +
+  Dropout
+conv_filters:
+- 32
+- 64
+- 128
+- 128
+activation: relu
+dense_units: 128
+dropout_rate: 0.3
+augmentation: true
+normalization: Rescaling(1/255) inside the model
+input_shape:
+- 128
+- 128
+- 3
+pretrained: false
+optimizer: adam
+learning_rate: 0.0003
+batch_size: 32
+max_epochs: 40
+early_stopping:
+  monitor: val_loss
+  patience: 3
+  restore_best_weights: true
+epochs_run: 7
+best_epoch: 4
+n_parameters: 259784
+n_trainable_parameters: 259080
+seed: 43
+pollution_method: null
+pollution_percent: 0
+training_seconds: 726.3
+validation:
+  loss: 0.4696608781814575
+  accuracy: 0.8318840579710145
+  f1_macro: 0.8105943356606503

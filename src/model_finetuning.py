@@ -6,23 +6,30 @@ from tensorflow.keras.applications import MobileNetV2
 from src.data_load import IMAGE_SIZE
 
 
-def load_model(input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3)):
-    """Load MobileNetV2 pre-trained on ImageNet, without its classification head."""
+def load_model(input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3), pretrained=True):
+    """Load MobileNetV2 without its classification head (ImageNet weights if pretrained)."""
     return MobileNetV2(
         input_shape=input_shape,
         include_top=False,
-        weights="imagenet",
+        weights="imagenet" if pretrained else None,
     )
 
 
-def build_model(num_classes=8):
-    """Build backbone + new classification head. Returns (model, backbone)."""
-    backbone = load_model()
+def build_model(num_classes=8, pretrained=True):
+    """Build normalization + backbone + new classification head. Returns (model, backbone).
+
+    The model takes RAW uint8 images (0-255) : the normalization is the first layer of the
+    model. The arrays stay small in memory (uint8) and are converted batch by batch.
+    pretrained=False is used to rebuild a model whose weights are loaded from a file.
+    """
+    backbone = load_model(pretrained=pretrained)
     backbone.trainable = False  # phase 1 : the backbone is frozen
 
-    inputs = layers.Input(shape=(IMAGE_SIZE, IMAGE_SIZE, 3))
+    inputs = layers.Input(shape=(IMAGE_SIZE, IMAGE_SIZE, 3), dtype="uint8")
+    # Same operation as mobilenet_v2.preprocess_input : pixels from [0, 255] to [-1, 1]
+    x = layers.Rescaling(scale=1.0 / 127.5, offset=-1.0)(inputs)
     # training=False keeps the BatchNorm layers in inference mode
-    x = backbone(inputs, training=False)
+    x = backbone(x, training=False)
     # The backbone returns a 3D feature map, pooling turns it into a vector
     x = layers.GlobalAveragePooling2D()(x)
     # New classification head : one probability per class

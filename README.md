@@ -28,6 +28,9 @@ run_finetuning.py             # piste C : charge les données et lance les expé
 requirements.txt
 splits.csv                    # split train / validation / test partagé
 Data_Exploration.ipynb
+run_model_b.py
+plot_comparison.py
+compare_pollution.py
 data/
     train/
     valid/
@@ -38,8 +41,12 @@ src/
     degradation.py           # pollution des images d'entraînement (partagé)
     model1.py                # piste A : CNN from scratch (4 blocs convolutifs, augmentation optionnelle)
     experiment_a.py          # piste A : train_run, evaluate_on_test, finalistes
+    model_b.py
+    robustness_b.py
     model_finetuning.py      # piste C : MobileNetV2, tête de classification, gel / dégel
     experiment.py            # piste C : run_experiment (entraîner, évaluer, sauvegarder)
+    runner.py
+    runs.py
     ...
 track_A_pierre_louis/
     exploration_and_results.ipynb   # piste A : réglage, finalistes, test, pollution, robustesse
@@ -181,3 +188,6 @@ Finalistes (`results/finalistes_A.md`) : `A_cnn4blocks_noaug_lr0.0003_do0.3` et
 Moyenne ± écart-type sur les seeds 42, 43, 44. Les autres résultats sont dans `results/` :
 `test_A.csv`, `confusion_A.png`, `pollution_A.csv`, `pollution_A.png` et les dossiers
 `*_robustness/`.
+
+
+## Piste C : fine-tuning

@@ -1,0 +1,16 @@
+model: MobileNetV2
+track: C
+unfreeze_last_n_layers: 0
+lr_head: 0.001
+lr_finetune: 1.0e-05
+optimizer: Adam
+activation_output: softmax
+batch_size: 32
+epochs_head: 2
+epochs_finetune: 10
+pollution_method: null
+pollution_percent: 0
+seed: 42
+total_params: 2268232
+trainable_params: 10248
+training_time_s: 84.2

@@ -43,7 +43,12 @@ def degrade_images(images, method):
 def pollute_train(X, method, fraction, seed):
     """Degrade a random fraction of the images (to use on the TRAIN set only).
 
-    X must contain raw uint8 pixels (0-255) : pollute BEFORE preprocess_input.
+    X must contain raw uint8 pixels (0-255) : pollute BEFORE any normalization.
+
+    The images are chosen from ONE random permutation of the dataset (fixed by the seed),
+    so the polluted subsets are nested : with the same seed, the images degraded at 10 %
+    are also degraded at 20 % and at 30 %. The curves of a pollution study are then
+    not disturbed by a different draw at each level.
     """
     assert X.dtype == np.uint8, f"degrade_images needs uint8 images, got {X.dtype}"
     X_out = X.copy()
@@ -51,6 +56,6 @@ def pollute_train(X, method, fraction, seed):
     if n_polluted == 0:
         return X_out
     rng = np.random.default_rng(seed)  # fixed seed -> same polluted images at each run
-    idx = rng.choice(len(X), size=n_polluted, replace=False)
+    idx = rng.permutation(len(X))[:n_polluted]
     X_out[idx] = degrade_images(X[idx], method)
     return X_out

@@ -1,0 +1,42 @@
+activation: relu
+architecture: 4x [Conv2D-BatchNorm-ReLU-MaxPool] + GlobalAveragePooling + Dense +
+  Dropout
+augmentation: true
+batch_size: 32
+best_epoch: 4
+category: aug
+config_key: A_cnn4blocks_aug_lr0.0003_do0.3
+conv_filters:
+- 32
+- 64
+- 128
+- 128
+dense_units: 128
+dropout_rate: 0.3
+early_stopping:
+  monitor: val_loss
+  patience: 3
+  restore_best_weights: true
+epochs_run: 7
+input_shape:
+- 128
+- 128
+- 3
+learning_rate: 0.0003
+max_epochs: 40
+model: cnn_from_scratch
+n_parameters: 259784
+n_trainable_parameters: 259080
+normalization: Rescaling(1/255) inside the model
+optimizer: adam
+pollution_method: flou
+pollution_percent: 20
+pretrained: false
+run_name: A_cnn4blocks_aug_lr0.0003_do0.3_flou20_seed43
+seed: 43
+track: A
+training_seconds: 1489.3
+validation:
+  accuracy: 0.8154589371980676
+  f1_macro: 0.7969234633536234
+  loss: 0.5178033113479614

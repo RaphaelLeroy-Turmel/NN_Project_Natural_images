@@ -1,0 +1,92 @@
+batch_size: 32
+class_names:
+- airplane
+- car
+- cat
+- dog
+- flower
+- fruit
+- motorbike
+- person
+epochs: 15
+image_size: 128
+learning_rate: 0.001
+max_epochs: 15
+model: MobileNetV2 frozen, ImageNet, softmax
+patience: 3
+pollution_method: flou
+pollution_percent: 20
+pollution_seed: 44
+resize: padding
+seed: 44
+total_params: 2268232
+trainable_params: 10248
+training_seconds: 195.82871683399935
+val_accuracy: 0.9970986460348162
+val_confusion_matrix:
+- - 109
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+- - 0
+  - 145
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+- - 0
+  - 0
+  - 133
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+- - 0
+  - 0
+  - 3
+  - 102
+  - 0
+  - 0
+  - 0
+  - 0
+- - 0
+  - 0
+  - 0
+  - 0
+  - 126
+  - 0
+  - 0
+  - 0
+- - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 150
+  - 0
+  - 0
+- - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 118
+  - 0
+- - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 148
+val_f1_macro: 0.9967943537524918
+val_loss: 0.010238582268357277

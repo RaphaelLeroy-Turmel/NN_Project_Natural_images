@@ -1,0 +1,12 @@
+backbone_trainable: false
+backbone_weights: imagenet
+batch_size: 32
+classifier_activation: softmax
+epochs: 3
+image_size: 128
+learning_rate: 0.001
+model: "MobileNetV2 gel\xE9"
+resize: padding
+seed: 42
+total_params: 2268232
+trainable_params: 10248

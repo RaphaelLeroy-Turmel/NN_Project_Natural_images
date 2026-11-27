@@ -4,3 +4,5 @@ pandas
 Pillow
 scikit-learn
 PyYAML
+tensorflow
+matplotlib

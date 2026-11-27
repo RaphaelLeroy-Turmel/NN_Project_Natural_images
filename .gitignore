@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyc
 *.py[codz]
 *$py.class
 
@@ -224,3 +225,7 @@ __marimo__/
 
 # Données locales du projet
 /data/
+
+# Model weights (too heavy for Git)
+results/**/*.h5
+results/**/*.keras

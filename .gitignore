@@ -224,3 +224,7 @@ __marimo__/
 
 # Données locales du projet
 /data/
+
+# Model weights (too heavy for Git)
+results/**/*.h5
+results/**/*.keras

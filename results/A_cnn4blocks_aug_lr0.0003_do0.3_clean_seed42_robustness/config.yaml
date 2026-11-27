@@ -1,0 +1,19 @@
+black_square_side_px:
+- 0
+- 24
+- 40
+- 64
+blur_radius_px:
+- 0
+- 1
+- 2
+- 3
+image_size: 128
+pixel_block_width_px:
+- 1
+- 2
+- 4
+- 8
+resize: direct
+split: test
+weights: results/A_cnn4blocks_aug_lr0.0003_do0.3_clean_seed42/model.weights.h5
